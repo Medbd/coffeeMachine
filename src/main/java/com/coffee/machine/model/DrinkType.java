@@ -3,7 +3,8 @@ package com.coffee.machine.model;
 public enum DrinkType {
 	COFFEE ("C" , 0.6) , 
 	TEA("T" , 0.4) ,
-	CHOCOLATE("H",0.5) ;
+	CHOCOLATE("H",0.5),
+	ORANGE_JUICE("O" , 0.6);
 	private String drinkTypeCode ;
 	private double drinkPrice ;
 

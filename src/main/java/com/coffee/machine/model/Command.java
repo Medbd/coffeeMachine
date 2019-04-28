@@ -2,6 +2,9 @@ package com.coffee.machine.model;
 
 public class Command {
 	
+	private DrinkCommand drinkCommand ;
+	private double money ;
+	
 	public Command(DrinkCommand drinkCommand, double money) {
 		this.drinkCommand = drinkCommand;
 		this.money = money;
@@ -18,7 +21,5 @@ public class Command {
 	public void setMoney(double money) {
 		this.money = money;
 	}
-	private DrinkCommand drinkCommand ;
-	private double money ;
 
 }
