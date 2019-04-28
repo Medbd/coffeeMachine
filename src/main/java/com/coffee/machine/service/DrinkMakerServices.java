@@ -13,9 +13,12 @@ public class DrinkMakerServices {
 	public static final String ESPACE = " ";
 	public static final String TOTAL = "Total";
 	
-public static ReportServices reportServices = new ReportServices() ;
+	private  BeverageQuantityChecker beverageQuantityChecker  ;
+	private  EmailNotifier emailNotifier;
 	
-	public static String translateOrder(final DrinkCommand drinkCommand) {
+    public static ReportServices reportServices = new ReportServices() ;
+	
+	public  String translateOrder(final DrinkCommand drinkCommand) {
 		StringBuilder command = new StringBuilder() ; 
 		command.append(drinkCommand.getDrinkType().getDrinkTypeCode()) ;
 		if(drinkCommand.isExtraHot())
@@ -31,7 +34,7 @@ public static ReportServices reportServices = new ReportServices() ;
 		return command.toString() ;
 	}
 	
-	public static String displayMessage(String message) {
+	public  String displayMessage(String message) {
 		StringBuilder messageResult = new StringBuilder() ;
 		messageResult.append(M);
 		messageResult.append(COLON);
@@ -39,11 +42,16 @@ public static ReportServices reportServices = new ReportServices() ;
 		return messageResult.toString();
 	}
 	
-	public static String handleCommand(final Command command) {
+	public  String handleCommand(final Command command) {
 		if(command.getDrinkCommand() == null)
 			throw new IllegalArgumentException(DrinkMakerResource.ARGUMENT_SHOULD_NOT_BE_NULL.name());
 		if(command.getDrinkCommand().getDrinkType() == null)
 			throw new IllegalArgumentException(DrinkMakerResource.DRINK_TYPE_SHOULD_NOT_BE_NULL.name());
+		
+		/*if (beverageQuantityChecker.isEmpty(command.getDrinkCommand().getDrinkType().getDrinkTypeCode())) {
+            emailNotifier.notifyMissingDrink(command.getDrinkCommand().getDrinkType().getDrinkTypeCode());
+            return displayMessage(DrinkMakerResource.PROBLEM_OF_SHORTAGE_AND_NOTIFICATION_HAS_BEEN_SENT.name()) ;
+        }*/
 		if(checkIfEnoughMoney(command)) {
 			reportServices.addToReport(command) ;
 			return sendOrder(translateOrder(command.getDrinkCommand())) ;
@@ -54,14 +62,14 @@ public static ReportServices reportServices = new ReportServices() ;
 		
 	}
 	
-	public static boolean checkIfEnoughMoney(final Command command) {
+	public  boolean checkIfEnoughMoney(final Command command) {
 		if(command.getMoney() >= command.getDrinkCommand().getDrinkType().getDrinkPrice())
 			return true ; 
 		return false ;
 		
 	}
 	
-	public static String sendOrder(final String order) {
+	public  String sendOrder(final String order) {
 		// send order to drink maker
 		return DrinkMakerResource.ORDER_HAS_BEEN_PROCESSED.name();	
 	}
