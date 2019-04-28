@@ -1,5 +1,6 @@
 package com.coffee.machine.service;
 
+import com.coffee.machine.model.Command;
 import com.coffee.machine.model.DrinkCommand;
 
 public class DrinkMakerServices {
@@ -10,10 +11,6 @@ public class DrinkMakerServices {
 	
 	
 	public static String translateOrder(final DrinkCommand drinkCommand) {
-		if(drinkCommand == null)
-			throw new IllegalArgumentException(DrinkMakerResource.ARGUMENT_SHOULD_NOT_BE_NULL.name());
-		if(drinkCommand.getDrinkType() == null)
-			throw new IllegalArgumentException(DrinkMakerResource.DRINK_TYPE_SHOULD_NOT_BE_NULL.name());
 		StringBuilder command = new StringBuilder() ; 
 		command.append(drinkCommand.getDrinkType().getDrinkTypeCode()) ;
 		command.append(COLON);
@@ -35,9 +32,31 @@ public class DrinkMakerServices {
 		return messageResult.toString();
 	}
 	
-	public static String command(final DrinkCommand drinkCommand) {
-		return translateOrder(drinkCommand) ;
+	public static String handleCommand(final Command command) {
+		if(command.getDrinkCommand() == null)
+			throw new IllegalArgumentException(DrinkMakerResource.ARGUMENT_SHOULD_NOT_BE_NULL.name());
+		if(command.getDrinkCommand().getDrinkType() == null)
+			throw new IllegalArgumentException(DrinkMakerResource.DRINK_TYPE_SHOULD_NOT_BE_NULL.name());
+		if(checkIfEnoughMoney(command)) {
+			return sendOrder(translateOrder(command.getDrinkCommand())) ;
+		}
+		return displayMessage(DrinkMakerResource.MONEY_IS_NOT_ENOUGH.name() 
+				+ (command.getDrinkCommand().getDrinkType().getDrinkPrice() - command.getMoney())) ;
 		
-	}		
+		
+	}
+	
+	public static boolean checkIfEnoughMoney(final Command command) {
+		if(command.getMoney() >= command.getDrinkCommand().getDrinkType().getDrinkPrice())
+			return true ; 
+		return false ;
+		
+	}
+	
+	public static String sendOrder(final String order) {
+		// send order to drink maker
+		return DrinkMakerResource.ORDER_HAS_BEEN_PROCESSED.name();
+		
+	}	
 
 }
