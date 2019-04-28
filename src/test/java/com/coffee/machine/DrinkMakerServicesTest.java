@@ -132,6 +132,22 @@ public class DrinkMakerServicesTest {
 	}
 	
 	@Test
+	public void should_return_order_has_been_processed_when_money_of_orange_juice_command_is_enough() {
+		DrinkCommand drinkCommand = new DrinkCommand(DrinkType.ORANGE_JUICE, 1,false) ;
+		Command command = new Command(drinkCommand, 0.6) ;
+		String CommandMessage = DrinkMakerServices.handleCommand(command);
+		assertEquals(DrinkMakerResource.ORDER_HAS_BEEN_PROCESSED.name() , CommandMessage);
+	}
+	
+	@Test
+	public void should_return_message_M_colon_money_is_not_enough_01_when_money_of_orange_juice_command_is_not_enough() {
+		DrinkCommand drinkCommand = new DrinkCommand(DrinkType.ORANGE_JUICE, 1,false) ;
+		Command command = new Command(drinkCommand, 0.5) ;
+		String CommandMessage = DrinkMakerServices.handleCommand(command);
+		String rightMessage = DrinkMakerResource.MONEY_IS_NOT_ENOUGH.name() + (command.getDrinkCommand().getDrinkType().getDrinkPrice() - command.getMoney()) ;
+		assertEquals(DrinkMakerServices.displayMessage(rightMessage) , CommandMessage);
+	}
+	@Test
 	public void should_return_Ch_colon_colon_when_command_coffee_extra_hot_without_sugar() {
 		DrinkCommand drinkCommand = new DrinkCommand(DrinkType.COFFEE,0,true); 
 		String Command = DrinkMakerServices.translateOrder(drinkCommand);
