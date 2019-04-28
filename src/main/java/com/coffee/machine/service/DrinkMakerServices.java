@@ -8,11 +8,14 @@ public class DrinkMakerServices {
 	public static final String COLON = ":";
 	public static final String ZERO = "0";
 	public static final String M = "M";
+	public static final String H = "h";
 	
 	
 	public static String translateOrder(final DrinkCommand drinkCommand) {
 		StringBuilder command = new StringBuilder() ; 
 		command.append(drinkCommand.getDrinkType().getDrinkTypeCode()) ;
+		if(drinkCommand.isExtraHot())
+			command.append(H);
 		command.append(COLON);
 		if(drinkCommand.getNumberOfSugar() > 0) {
 			command.append(drinkCommand.getNumberOfSugar());
