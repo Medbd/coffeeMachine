@@ -56,7 +56,7 @@ public class ReportServicesTest {
 	
 	@Test
 	public void check_dispay_report_complet_when_report_is_emply() {
-		assertEquals("H:0 C:0 O:0 T:0 Total:0.0", report.DisplayReport());
+		assertEquals("H:0 C:0 O:0 T:0 Total:0.0", report.displayReport());
 
 	}
 	
@@ -67,7 +67,7 @@ public class ReportServicesTest {
 		report.addToReport(new Command(new DrinkCommand(DrinkType.TEA, 1, false), 0.7));
 		report.addToReport(new Command(new DrinkCommand(DrinkType.ORANGE_JUICE, 1, false), 0.7));
 		report.addToReport(new Command(new DrinkCommand(DrinkType.CHOCOLATE, 1, false), 0.7));
-		assertEquals("H:1 C:1 O:1 T:2 Total:2.5", report.DisplayReport());
+		assertEquals("H:1 C:1 O:1 T:2 Total:2.5", report.displayReport());
 
 	}
 

@@ -32,7 +32,7 @@ public class Report {
 		return commandList.stream().mapToDouble(c -> c.getDrinkCommand().getDrinkType().getDrinkPrice()).sum() ;
 	}
 	
-    public  String DisplayReport() {
+    public  String displayReport() {
     	StringBuilder reportToDisplay = new StringBuilder() ; 
     	reportToDisplay.append(DrinkType.CHOCOLATE.getDrinkTypeCode());
     	reportToDisplay.append(COLON);
